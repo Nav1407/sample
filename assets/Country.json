@@ -1,0 +1,56 @@
+{
+  "items": [
+    {
+      "name": "Australia",
+      "image": "https://www.pngall.com/wp-content/uploads/2016/05/Australia-Flag-PNG.png"
+    },
+    {
+      "name": "United States",
+      "image": "https://image.shutterstock.com/image-vector/united-states-flag-vector-illustration-600w-1719382438.jpg"
+    },
+    {
+      "name": "Canada",
+      "image": "https://image.shutterstock.com/image-vector/canadian-flag-vector-600w-547573435.jpg"
+    },
+    {
+      "name": "Russia",
+      "image": "https://image.shutterstock.com/image-vector/russian-flag-russia-vector-illustration-600w-1102475063.jpg"
+    },
+    {
+      "name": "Greece",
+      "image": "https://image.shutterstock.com/image-vector/greece-flag-600w-91905989.jpg"
+    },
+    {
+      "name": "South Africa",
+      "image": "https://image.shutterstock.com/image-vector/south-africa-flag-600w-91905962.jpg"
+    },
+    {
+      "name": "Czech Republic",
+      "image": "https://image.shutterstock.com/image-vector/flag-czech-republic-600w-284824889.jpg"
+    },
+    {
+      "name": "France",
+      "image": "https://image.shutterstock.com/image-vector/france-flag-vector-600w-547572946.jpg"
+    },
+    {
+      "name": "Italy",
+      "image": "https://image.shutterstock.com/image-photo/close-waving-flag-italy-symbols-600w-1893148606.jpg"
+    },
+    {
+      "name": "Netherlands",
+      "image": "https://image.shutterstock.com/image-vector/vector-netherlands-flag-600w-188762234.jpg"
+    },
+    {
+      "name": "Germany",
+      "image": "https://image.shutterstock.com/image-vector/germany-flag-vector-eps10-german-600w-540126295.jpg"
+    },
+    {
+      "name": "Spain",
+      "image": "https://image.shutterstock.com/image-vector/vector-spanish-flag-600w-382973656.jpg"
+    },
+    {
+      "name": "United Kingdom",
+      "image": "https://image.shutterstock.com/image-vector/united-kingdom-flag-600w-286742012.jpg"
+    }
+  ]
+}
