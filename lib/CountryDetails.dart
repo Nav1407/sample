@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sample_app/university_object.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'api_helper.dart';
 
 class CountryDetails extends StatefulWidget {
@@ -20,6 +20,7 @@ class _CountryDetailsState extends State<CountryDetails> {
   }
 
   List<UniversityObj>? universities;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -44,15 +45,19 @@ class _CountryDetailsState extends State<CountryDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.deepPurpleAccent,
         appBar: AppBar(
           title: Text(this.country_name),
         ),
-        body: SafeArea(child:
+        body: SafeArea(
+          child:
         universities != null ? ListView.builder(
           itemCount: universities!.length,
           itemBuilder: (context, i) {
-
-            return UniversityView(name: universities![i].name,);
+            return UniversityView(
+            name: universities![i].name,
+              webPages: universities![i].webPages.toString(),
+              );
           },
           scrollDirection: Axis.vertical,
         ) : Center(child: CircularProgressIndicator()),)
@@ -60,15 +65,34 @@ class _CountryDetailsState extends State<CountryDetails> {
   }
 }
 class UniversityView extends StatelessWidget {
-  const UniversityView({Key? key,required this.name}) : super(key: key);
+  UniversityView({Key? key,required this.name, required this.webPages}) : super(key: key);
   final String name;
+  String webPages = '';
+
+  Future<void> _launchInBrowser(String url) async{
+    try {
+        await launch(url, forceSafariVC: true, forceWebView: true,);
+    } catch (err) {
+      throw 'Could not launch $url';
+    }
+    // if(!await canLaunch(url)){
+    //   await launch(url, forceSafariVC: false, forceWebView: false,
+    //   );
+    // }else{
+    //   throw 'Could not launch $url';
+    // }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      //alignment: Alignment.topLeft,
+      width: double.infinity,
+      height: 90,
       margin: EdgeInsets.symmetric(horizontal: 15,vertical: 8),
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.blue,
           borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
@@ -78,7 +102,28 @@ class UniversityView extends StatelessWidget {
               spreadRadius: 0.3,
             ),
           ]),
-      child: Text(name,style: TextStyle(color: Colors.black,fontSize: 17),),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          name,
+          softWrap: true,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 15.0,
+            fontWeight: FontWeight.bold,),),
+        FlatButton(
+          onPressed: () async {
+            _launchInBrowser(webPages);},
+            child: Text('More Info', softWrap: true,
+            style: TextStyle(
+                decoration: TextDecoration.underline,
+                color: Colors.white),
+              ),
+        )
+      ],
+        ),
     );
   }
 }
