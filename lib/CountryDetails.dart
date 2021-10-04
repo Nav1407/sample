@@ -67,11 +67,11 @@ class _CountryDetailsState extends State<CountryDetails> {
 class UniversityView extends StatelessWidget {
   UniversityView({Key? key,required this.name, required this.webPages}) : super(key: key);
   final String name;
-  String webPages = '';
+  String webPages;
 
   Future<void> _launchInBrowser(String url) async{
     try {
-        await launch(url, forceSafariVC: true, forceWebView: true,);
+      launch(url, forceSafariVC: true, forceWebView: true,);
     } catch (err) {
       throw 'Could not launch $url';
     }
@@ -115,7 +115,7 @@ class UniversityView extends StatelessWidget {
             fontWeight: FontWeight.bold,),),
         FlatButton(
           onPressed: () async {
-            _launchInBrowser(webPages);},
+            _launchInBrowser(webPages.substring(1, webPages.length-1));},
             child: Text('More Info', softWrap: true,
             style: TextStyle(
                 decoration: TextDecoration.underline,
