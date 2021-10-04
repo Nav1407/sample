@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sample_app/Api.dart';
-import 'dart:io';
-import 'dart:convert';
-import 'dart:async';
-import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
+import 'package:sample_app/university_object.dart';
+
+import 'api_helper.dart';
 
 class CountryDetails extends StatefulWidget {
   String country_name = '';
@@ -22,48 +19,66 @@ class _CountryDetailsState extends State<CountryDetails> {
     print(country_name);
   }
 
+  List<UniversityObj>? universities;
+  @override
+  void initState() {
+    // TODO: implement initState
+    getData();
+    super.initState();
+  }
+  void getData() async {
+    try {
+      final res = await APIHelper().getUniversities();
+      setState(() {
+        universities = res;
+      });
+    } on Exception catch(e){
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+              e.toString()),
+        ),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    appBar: AppBar(
-      title: Text(this.country_name),
-    ),
-      body: Container(
-          padding: EdgeInsets.all(15.0),
-          child: new FutureBuilder(
-              future: getData(),
-              builder: (context, snapshot) {
-                if (snapshot.data == null) {
-                  return Center(child:CircularProgressIndicator());
-                }
-                else return ListView.builder(itemCount: snapshot.data.length,
-                    itemBuilder: (context, i) {
-                  return ListTile(
-                    title: Text(snapshot.data[i].name),
-                  );
-                });
-             }
-              ),
-      ),
+        appBar: AppBar(
+          title: Text(this.country_name),
+        ),
+        body: SafeArea(child:
+        universities != null ? ListView.builder(
+          itemCount: universities!.length,
+          itemBuilder: (context, i) {
+
+            return UniversityView(name: universities![i].name,);
+          },
+          scrollDirection: Axis.vertical,
+        ) : Center(child: CircularProgressIndicator()),)
     );
   }
-  Future getData() async {
-    final url = "http://universities.hipolabs.com/search?country=United+States";
-
-    var response = await http.get(Uri.https('universities.hipolabs.com', 'search?country=United+States'));
-    var jsonData = jsonDecode(response.body);
-
-    List<User> users = [];
-    for(var u in jsonData){
-      User user = User(u["name"]);
-      users.add(user);
-    }
-    print('------------');
-    print(users.length);
-    return users;
-  }
 }
-class User {
+class UniversityView extends StatelessWidget {
+  const UniversityView({Key? key,required this.name}) : super(key: key);
   final String name;
-  User(this.name);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 15,vertical: 8),
+      padding: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              offset: const Offset(0.0, 2.0),
+              blurRadius: 4.0,
+              spreadRadius: 0.3,
+            ),
+          ]),
+      child: Text(name,style: TextStyle(color: Colors.black,fontSize: 17),),
+    );
+  }
 }
